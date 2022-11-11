@@ -1,0 +1,179 @@
+---------- MANDATORY ----------
+	
+	Docker et Docker-compose :
+		
+		https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+		https://cloud.google.com/architecture/best-practices-for-building-containers
+		https://petermalmgren.com/signal-handling-docker/
+		https://stackoverflow.com/questions/25970711/what-is-the-difference-between-nginx-daemon-on-off-option
+		- 1 service / 1 container : Because a container is designed to have the same lifecycle as the app it hosts, each of your containers should contain only one app
+		- The first process launched in a container gets PID 1. Docker use signals to communicate with the processes inside containers, most notably to terminate them. Docker can only send signals to the process that has PID 1 inside a container.
+		- PID 1 processes in Linux do not have any default signal handlers and as a result will not receive and propogate signals. They are also expected to take on certain responsibilities, such as adopting orphaned processes, and reaping zombie processes.
+		- Solution: Run as PID 1 and register signal handlers
+			The easiest way to implement this solution is to launch your process with the CMD and/or ENTRYPOINT instructions in your Dockerfile
+
+		- Network
+			a port does not need to be exposed in order to access it from a second container as long as both containers share the same network.
+			containers from the same network can easily talk to each other and hosts are resolved by name
+			use cases would be to connect different projects or microservices
+			Basically, links is no longer needed because its main purpose, making container reachable by another by adding environment variable, is included implicitly with network. 
+			When containers are placed in the same network, they are reachable by each other using their container name and other alias as host.
+
+		- depends_on
+			depends_on is a Docker Compose keyword to set the order in which services must start and stop.
+			les containers communiquent ensemble grace à network
+			https://www.baeldung.com/ops/docker-compose-links-depends-on
+			https://docs.docker.com/compose/startup-order/
+
+		- Basic commands			
+			docker build --rm -t redis:debian .
+			docker run --rm -it redis:debian bash
+
+	Nginx :
+
+		- flexible and powerful web server
+		- proxy server (= relais)
+		- very performant when working to handle requests with other servers
+
+		- FastCGI proxying, is one of the most common proxying protocols :
+			#used to translate client requests for an application server that does not handle client requests directly
+			#one of the main use-cases of FastCGI proxying within Nginx is for PHP processing :
+				Unlike Apache, which can handle PHP processing directly with the use of the mod_php module, 
+				Nginx must rely on a separate PHP processor to handle PHP requests. 
+				Most often, this processing is handled with php-fpm (a PHP processor that has been extensively tested to work with Nginx)
+		- The proxy server, in this case Nginx, forwards requests from clients to a backend server (debian with php-fpm and wordpress in our case)
+		- The directive that Nginx uses to define the actual server to proxy to using the FastCGI protocol is fastcgi_pass (wordpress:9000)
+		- FastCGI is a separate protocol that cannot read http but works with parameters using the fastcgi_param directive :
+			REQUEST_METHOD: what type of operation it should be performing
+			SCRIPT_FILENAME: which file to execute
+
+		- ssl / openssl / TLS v1.2-1.3 :
+			https://fr.wikipedia.org/wiki/Transport_Layer_Security
+
+			SSL: is a certificate you install at the server.
+			OpenSSL: is a software library used to implement the TLS(Transport Layer Security) and SSL (Secure Sockets Layer)
+
+			Open Secure Sockets Layer = an open source version of the SSL and TLS security protocols, which provide encryption and server authentication over the Internet.
+			OpenSSL est une boîte à outils de chiffrement comportant deux bibliothèques, libcrypto et libssl, fournissant respectivement une implémentation des algorithmes cryptographiques et du protocole de communication SSL/TLS, ainsi qu'une interface en ligne de commande, openssl. 
+
+			La Transport Layer Security (TLS) ou « Sécurité de la couche de transport », et son prédécesseur la Secure Sockets Layer (SSL) ou « Couche de sockets sécurisée »1, sont des protocoles de sécurisation des échanges par réseau informatique, notamment par Internet.
+			La TLS (ou SSL) fonctionne suivant un mode client-serveur. Il permet de satisfaire les objectifs de sécurité suivants : 
+				#l'authentification du serveur ;
+				#la confidentialité des données échangées (ou session chiffrée) ;
+				#l'intégrité des données échangées ;
+				#de manière optionnelle, l'authentification du client
+			Les protocoles de la couche application, comme le HTTP, n'ont pas à être profondément modifiés pour utiliser une connexion sécurisée, mais seulement implémentés au-dessus de la SSL/TLS, ce qui pour le HTTP a donné le protocole HTTPS. 
+			
+	Wordpress (et php-fpm):
+
+		- WordPress 
+			= système de gestion de contenu (gratuit, libre et open-source)
+			logiciel écrit en PHP et repose sur une base de données MySQL
+			https://fr.wikipedia.org/wiki/WordPress
+
+		- Php-fpm
+			FPM (FastCGI Process Manager) est une alternative à l'implémentation PHP FastCGI avec des fonctionnalités supplémentaires utiles pour les sites très fortement chargés. 
+			permet la communication entre un serveur Web et PHP, basée sur le protocole FastCGI
+
+		- make wordpress
+		- cd /var/www/html/wordpress (ou cd wordpress)
+		- mv index.php index2.php && echo "<?php phpinfo() ?>" > index.php
+		- refresh url du site
+
+	Mariadb :
+
+		MariaDB est un système de gestion de base de données libre
+		Il s'agit d'un embranchement communautaire de MySQL, suite au rachat de ce mysql par Oracle
+		mais assurant l'interopérabilité entre les 2
+
+		# 'docker logs mariadb' pour voir l'installation de mysql
+
+		# Pour voir les databases dans mariadb:
+		# make mariadb
+		# mysql
+			# [langage SQL depuis ici]
+
+		Exemples de commandes SQL pour fouiller les databases installées:
+			$ SELECT user, host FROM mysql.user;
+			$ show databases;
+			$ use wordpress;
+			$ show tables;
+			$ SELECT wp_users.display_name FROM wp_users;
+			$ SELECT *  FROM wp_users;
+			$ show grants for tnanchen@'%';
+
+		# Pour exporter une base de donnée dans le répertoire courant:
+		# make mariadb
+		# mysqldump -u 'tnanchen' -p 'wordpress' > filename.sql
+
+
+---------- BONUS ----------
+
+	Redis cache :
+
+		système de gestion de base de données clé-valeur extensible, très hautes performances
+		Afin de communiquer avec un serveur Redis, il faut ouvrir une connexion TCP. 
+		Stockage en RAM: conserver l'intégralité des données en RAM, permet d'obtenir d'excellentes performances en évitant les accès disques
+		Son port logiciel par défaut est 6379
+		
+		https://gaelbillon.com/installer-et-configurer-redis-pour-wordpress-en-5-minutes/
+		https://cloudinfrastructureservices.co.uk/how-to-install-redis-server-on-debian-11/
+		https://redis.io/docs/manual/config/
+		https://redis.io/docs/manual/admin/
+		https://redis.io/docs/manual/security/
+		https://linuxhint.com/redis-protected-mode/
+		https://www.digitalocean.com/community/tutorials/how-to-secure-your-redis-installation-on-ubuntu-14-04
+		https://www.tutorialspoint.com/redis/index.htm
+		https://www.digitalocean.com/community/tutorials/how-to-back-up-and-restore-your-redis-data-on-ubuntu-14-04
+		https://ubuntu.com/server/docs/backups-shell-scripts
+		
+		Test with (devrait lister des query mises en cache) :
+			# redis-cli
+			# AUTH bb9b314ba3f7c8f86975d95a65a47bbb6b19222cdd74badb2b7effa6619e1ca7
+			# INFO
+			# keys *
+		Faire quelques actions sur le site/dashboard admin
+		Puis refaire 
+			# keys *
+
+		Crontab
+		https://www.cyberciti.biz/faq/how-do-i-add-jobs-to-cron-under-linux-or-unix-oses/
+			test: run-parts --test /etc/cron.hourly
+
+	FTP :
+
+		https://doc.ubuntu-fr.org/vsftpd
+		https://www.digitalocean.com/community/tutorials/how-to-set-up-vsftpd-for-a-user-s-directory-on-ubuntu-18-04
+		https://linux.developpez.com/vsftpd/
+		https://phoenixnap.com/kb/linux-ftp
+		https://jfearn.fedorapeople.org/fdocs/en-US/Fedora_Draft_Documentation/0.1/html/System_Administrators_Guide/s2-ftp-vsftpd-conf.html
+
+		$ ftp tnanchen.42.fr
+		$ login
+		$ pass (to get into passiv mode)
+
+		oblige de restarter le container pour modifier les permissions du dossier /home/$(FTP_USER)/ftp/wordpress
+		-> voir dans le makefile
+		permet d'avoir les acces pour faire des modif en passant par un logiciel ftp comme filezila
+
+	Adminer :
+	
+		https://mariadb.com/kb/en/authentication-plugin-unix-socket/
+		https://www.howtoforge.com/how-to-install-adminer-database-administration-tool-on-ubuntu-22-04/
+		https://www.howtoforge.com/install-adminer-database-management-tool-on-debian-10/
+
+		connexion sur tnanchen.42.fr avec les infos suivantes :
+		Server		mariadb
+		Username	tnanchen
+		Password	new1234
+		Database	wordpress
+
+	Static_page :
+
+		https://blog.logrocket.com/how-to-run-a-node-js-server-with-nginx/
+		Reverse proxy server — As traffic to your app increases, the best approach to improve performance is to use Nginx as a reverse proxy server in front of the Node.js server to load balance traffic across the servers. This is the core use case of Nginx in Node.js applications
+
+		https://grafikart.fr/tutoriels/nodejs-nginx-960
+		https://stackoverflow.com/questions/5009324/node-js-nginx-what-now
+
+		https://linuxize.com/post/how-to-install-node-js-on-debian-10/
