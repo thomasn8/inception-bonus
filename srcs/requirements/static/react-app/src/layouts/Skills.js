@@ -29,22 +29,22 @@ export function Skills() {
 		<Container maxWidth='md' className={ cls.skillComponent }>
 			<Container className={ cls.skillsTitle } maxWidth='md'>
 				<Typography variant="h6">
-					Techs I know
+					$Techs I know
 				</Typography>
 			</Container>
 			<Container>
 				<Grid container justifyContent='center' spacing={3} className={ cls.skillContainer }>
 					<Grid item>
-						<img alt='Php' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" />
+						<img alt='linux' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" />
+					</Grid>
+					<Grid item>
+						<img alt='bash' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" />
 					</Grid>
 					<Grid item>
 						<img alt='C' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" />
 					</Grid>
 					<Grid item>
 						<img alt='C++' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" />
-					</Grid>
-					<Grid item>
-						<img alt='bash' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" />
 					</Grid>
 					<Grid item>
 						<img alt='javascript' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" />
@@ -55,7 +55,10 @@ export function Skills() {
 				</Grid>
 				<Grid container justifyContent='center' spacing={3} className={ cls.skillContainer }>
 					<Grid item>
-						<img alt='linux' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" />
+						<img alt='Php' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" />
+					</Grid>
+					<Grid item>
+						<img alt='mysql' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" />
 					</Grid>
 					<Grid item>
 						<img alt='git' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" />
@@ -65,9 +68,6 @@ export function Skills() {
 					</Grid>
 					<Grid item>
 						<img alt='nginx' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" />
-					</Grid>
-					<Grid item>
-						<img alt='mysql' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" />
 					</Grid>
 				</Grid>
 			</Container>

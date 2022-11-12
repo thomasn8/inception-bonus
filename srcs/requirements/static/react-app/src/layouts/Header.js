@@ -33,7 +33,7 @@ export function Header() {
 				<Grid container direction='row' justify='center' alignItems='center'>
 						<Grid item xs={ 6 } style={{ textAlign: 'left '}}>
 							<Typography variant="h6">Thomas Nanchen</Typography>
-							<Typography>Student at 42 Lausanne</Typography>
+							<Typography>Student @ 42 Lausanne</Typography>
 						</Grid>
 						
 						<Grid item xs={ 6 }>
@@ -43,10 +43,10 @@ export function Header() {
 								<Grid />
 								<Grid />
 								<Grid item>
-									<Link onClick={() => openMail()}>Mail</Link>
+									<Link onClick={() => openGithub()}>Github</Link>
 								</Grid>
 								<Grid item>
-									<Link onClick={() => openGithub()}>Github</Link>
+									<Link onClick={() => openMail()}>Mail</Link>
 								</Grid>
 							</Grid>
 						</Grid>

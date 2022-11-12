@@ -22,10 +22,10 @@ export function Introduction() {
 	return (
 		<Container maxWidth="md" className={ cls.introduction }>
 			<Typography variant="h3">
-				Hello,
+				$Hello,
 			</Typography>
-			<Typography>
-				Welcome to my CV page !
+			<Typography paddingLeft="40px">
+				$Welcome to my CV page !
 			</Typography>
 		</Container>
 	)

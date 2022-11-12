@@ -35,7 +35,7 @@ export function Footer() {
 				justify='center' alignItems='center'>
 				<Grid item xs={6} className={ cls.ad }>
 					<Typography>
-						$ Built for 42-inception
+						$Built for 42-inception\n
 					</Typography>
 				</Grid>
 				<Grid item xs={6} className={ cls.contactComponent }>
