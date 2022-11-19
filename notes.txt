@@ -26,8 +26,8 @@
 			https://docs.docker.com/compose/startup-order/
 
 		- Basic commands			
-			docker build --rm -t redis:debian .
-			docker run --rm -it redis:debian bash
+			docker build --rm -t grafana:debian .
+			docker run --rm -it grafana:debian bash
 
 	Nginx :
 
@@ -177,3 +177,14 @@
 		https://stackoverflow.com/questions/5009324/node-js-nginx-what-now
 
 		https://linuxize.com/post/how-to-install-node-js-on-debian-10/
+
+	Grafana :
+
+		https://grafana.com/tutorials/grafana-fundamentals/?utm_source=grafana_gettingstarted
+		https://grafana.com/docs/grafana/latest/setup-grafana/installation/debian/
+		https://grafana.com/docs/grafana/latest/getting-started/build-first-dashboard/
+		https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/
+		https://grafana.com/docs/grafana/latest/administration/provisioning/
+		https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/
+		https://blog.56k.cloud/provisioning-grafana-datasources-and-dashboards-automagically/
+		https://grafana.com/docs/grafana/latest/datasources/mysql/

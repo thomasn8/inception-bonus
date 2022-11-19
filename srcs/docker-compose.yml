@@ -87,6 +87,18 @@ services:
       - inception
     restart: always
 
+  grafana:
+    build: ./requirements/grafana
+    container_name: grafana
+    image: grafana:debian
+    networks:
+      - inception
+    env_file:
+      - .env
+    restart: always
+    ports:
+      - "127.0.0.1:3000:3000"
+
 networks:
   inception:
 

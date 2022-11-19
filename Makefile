@@ -47,6 +47,8 @@ adminer:
 		@docker exec -it adminer bash
 static:
 		@docker exec -it static bash
+grafana:
+		@docker exec -it grafana bash
 ps:
 		@docker ps
 img:

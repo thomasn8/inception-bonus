@@ -29,6 +29,8 @@ _EOF_
 	# créer la database wordpress et accorde les privilèges à tnanchen sur cette db
 	echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE; GRANT ALL ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD'; FLUSH PRIVILEGES;" | mysql -uroot
 
+	# echo "CREATE USER 'grafana'@'%' IDENTIFIED BY 'password'; GRANT SELECT ON $MYSQL_DATABASE.* TO 'grafana'@'%'; FLUSH PRIVILEGES;" | mysql -uroot
+
 	# importe les datas de wordpress.sql dans la database wordpress
 	mysql -uroot -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < /usr/local/bin/wordpress.sql
 
