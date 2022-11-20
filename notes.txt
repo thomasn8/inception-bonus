@@ -26,8 +26,8 @@
 			https://docs.docker.com/compose/startup-order/
 
 		- Basic commands			
-			docker build --rm -t grafana:debian .
-			docker run --rm -it grafana:debian bash
+			docker build --rm -t exporter:debian .
+			docker run --rm -it exporter:debian bash
 
 	Nginx :
 
@@ -178,7 +178,13 @@
 
 		https://linuxize.com/post/how-to-install-node-js-on-debian-10/
 
-	Grafana :
+	Prometheus-Grafana :
+
+		https://www.youtube.com/playlist?list=PLn6POgpklwWo3_2pj5Jflqwla62P5OI8n
+		https://www.youtube.com/watch?v=9TJx7QTrTyo
+
+		https://levelup.gitconnected.com/metrics-reliably-configuring-prometheus-and-grafana-with-docker-2077541c8e6d
+		https://prometheus.io/docs/prometheus/latest/getting_started/
 
 		https://grafana.com/tutorials/grafana-fundamentals/?utm_source=grafana_gettingstarted
 		https://grafana.com/docs/grafana/latest/setup-grafana/installation/debian/
@@ -188,3 +194,4 @@
 		https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/
 		https://blog.56k.cloud/provisioning-grafana-datasources-and-dashboards-automagically/
 		https://grafana.com/docs/grafana/latest/datasources/mysql/
+		

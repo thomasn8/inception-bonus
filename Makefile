@@ -47,8 +47,12 @@ adminer:
 		@docker exec -it adminer bash
 static:
 		@docker exec -it static bash
+prometheus:
+		@docker exec -it prometheus bash
 grafana:
 		@docker exec -it grafana bash
+nginx-exporter:
+		@docker exec -it nginx-exporter bash
 ps:
 		@docker ps
 img:
@@ -56,4 +60,4 @@ img:
 
 re:		clean run
 
-.PHONY: all run stop start down create clean prune nginx wordpress mariadb redis ftp adminer static ps img re
+.PHONY: all run stop start down create clean prune nginx wordpress mariadb redis ftp adminer prometheus grafana nginx-exporter static ps img re

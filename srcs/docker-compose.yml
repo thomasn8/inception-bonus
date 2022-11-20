@@ -87,17 +87,47 @@ services:
       - inception
     restart: always
 
-  grafana:
-    build: ./requirements/grafana
-    container_name: grafana
-    image: grafana:debian
+  prometheus:
+    build: ./requirements/prometheus
+    container_name: prometheus
+    image: prometheus:debian
+    ports:
+      - "127.0.0.1:9090:9090"
+    volumes:
+      - prometheus_data:/prometheus/
     networks:
       - inception
     env_file:
       - .env
     restart: always
+
+  grafana:
+    build: ./requirements/grafana
+    container_name: grafana
+    image: grafana:debian
     ports:
       - "127.0.0.1:3000:3000"
+    networks:
+      - inception
+    env_file:
+      - .env
+    restart: always
+  
+  nginx-exporter:
+    build: ./requirements/nginx-exporter
+    container_name: nginx-exporter
+    image: nginx-exporter:debian
+    ports:
+      - "127.0.0.1:9113:9113"
+    volumes:
+      - nginx-exporter_data:/metrics
+    networks:
+      - inception
+    env_file:
+      - .env
+    depends_on:
+      - nginx
+    restart: always
 
 networks:
   inception:
@@ -119,5 +149,17 @@ volumes:
     driver: local
     driver_opts:
       device: /home/$USER/data/redis
+      type: volume
+      o: bind
+  prometheus_data:
+    driver: local
+    driver_opts:
+      device: /home/$USER/data/prometheus
+      type: volume
+      o: bind
+  nginx-exporter_data:
+    driver: local
+    driver_opts:
+      device: /home/$USER/data/nginx-exporter
       type: volume
       o: bind
