@@ -8,8 +8,7 @@ RUN apt-get update && apt-get install -y wget daemon && \
 
 EXPOSE 9913
 
-# ENTRYPOINT ["prometheus-nginx-vts-exporter", "http://nginx:443/status/format/json"]
-ENTRYPOINT ["prometheus-nginx-vts-exporter", "http://tnanchen.42.fr/status/format/json"]
-
-# docker build --rm -t exporter:debian .
-# docker run --rm -it exporter:debian bash
+# ENTRYPOINT ["prometheus-nginx-vts-exporter", "-nginx.scrape_uri=http://nginx:443/status/format/json"]
+ENTRYPOINT ["sleep", "infinity"]
+# prometheus-nginx-vts-exporter -nginx.scrape_uri=http://nginx:443/status/format/json
+# /etc/default/prometheus-nginx-vts-exporter

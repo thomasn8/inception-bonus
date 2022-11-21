@@ -1,9 +1,13 @@
-all: run
+all: bonus
 
 run:
-		@sh setup.sh
+		@sh ./prepare/setup.sh
 		@docker-compose -f ./srcs/docker-compose.yml up -d --build
-		@sh loader.sh &
+
+bonus:
+		@sh ./prepare/setup-bonus.sh
+		@docker-compose -f ./srcs/docker-compose-bonus.yml up -d --build
+		@sh ./prepare/loader.sh &
 		@docker stop ftp
 		@docker start ftp
 		@docker exec -d ftp chown -R $(FTP_USER):$(FTP_USER) /home/$(FTP_USER)/ftp/wordpress
@@ -17,7 +21,7 @@ start:
 		@docker-compose -f ./srcs/docker-compose.yml start
 
 down:
-		@docker-compose -f ./srcs/docker-compose.yml down
+		@docker-compose -f ./srcs/docker-compose-bonus.yml down --remove-orphans
 
 create:
 		@sh setup.sh
@@ -30,15 +34,18 @@ clean:	down
 		@echo "Deleting all volumes : "
 		@docker volume rm -f `docker volume ls -q`;
 
-prune: 	down
-		docker system prune;
+re:		clean bonus
 
+# START containers in interactive mode
+# mandatory containers
 nginx:
 		@docker exec -it nginx bash
 wordpress:
 		@docker exec -it wordpress bash
 mariadb:
 		@docker exec -it mariadb bash
+
+# bonus containers
 redis:
 		@docker exec -it redis bash
 ftp:
@@ -53,11 +60,13 @@ grafana:
 		@docker exec -it grafana bash
 nginx-exporter:
 		@docker exec -it nginx-exporter bash
+
+# docker usefull cmds
+prune: 	down
+		docker system prune;
 ps:
 		@docker ps
 img:
 		@docker image ls -a
 
-re:		clean run
-
-.PHONY: all run stop start down create clean prune nginx wordpress mariadb redis ftp adminer prometheus grafana nginx-exporter static ps img re
+.PHONY: all run bonus stop start down create clean prune nginx wordpress mariadb redis ftp adminer prometheus grafana nginx-exporter static ps img re

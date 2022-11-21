@@ -1,6 +1,8 @@
 services:
   nginx:
-    build: ./requirements/nginx
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
     container_name: nginx
     image: nginx:debian
     depends_on :
@@ -39,96 +41,6 @@ services:
       - .env
     restart: always
 
-  redis:
-    build: ./requirements/redis
-    container_name: redis
-    image: redis:debian
-    depends_on:
-      - wordpress
-    volumes:
-      - redis_data:/etc/redis/
-    networks:
-      - inception
-    env_file:
-      - .env
-    restart: always
-
-  ftp:
-    build: ./requirements/ftp
-    container_name: ftp
-    image: ftp:debian
-    ports:
-      - "127.0.0.1:21:21"
-    volumes:
-      - wordpress_data:/home/$FTP_USER/ftp/wordpress
-    networks:
-      - inception
-    env_file:
-      - .env
-    restart: always
-
-  adminer:
-    build: ./requirements/adminer
-    container_name: adminer
-    image: adminer:debian
-    depends_on:
-      - mariadb
-    networks:
-      - inception
-    env_file:
-      - .env
-    restart: always
-
-  static:
-    build: ./requirements/static
-    container_name: static
-    image: static:debian
-    networks:
-      - inception
-    restart: always
-
-  prometheus:
-    build: ./requirements/prometheus
-    container_name: prometheus
-    image: prometheus:debian
-    ports:
-      - "127.0.0.1:9090:9090"
-    volumes:
-      - prometheus_data:/prometheus/
-    networks:
-      - inception
-    env_file:
-      - .env
-    restart: always
-
-  grafana:
-    build: ./requirements/grafana
-    container_name: grafana
-    image: grafana:debian
-    ports:
-      - "127.0.0.1:3000:3000"
-    networks:
-      - inception
-    env_file:
-      - .env
-    restart: always
-  
-  nginx-exporter:
-    build: ./requirements/nginx-exporter
-    container_name: nginx-exporter
-    image: nginx-exporter:debian
-    ports:
-      - "127.0.0.1:9913:9913"
-    volumes:
-      - nginx-exporter_data:/metrics
-    networks:
-      - inception
-    env_file:
-      - .env
-    depends_on:
-      - nginx
-    restart: always
-
 networks:
   inception:
 
@@ -143,23 +55,5 @@ volumes:
     driver: local
     driver_opts:
       device: /home/$USER/data/wordpress
-      type: volume
-      o: bind
-  redis_data:
-    driver: local
-    driver_opts:
-      device: /home/$USER/data/redis
-      type: volume
-      o: bind
-  prometheus_data:
-    driver: local
-    driver_opts:
-      device: /home/$USER/data/prometheus
-      type: volume
-      o: bind
-  nginx-exporter_data:
-    driver: local
-    driver_opts:
-      device: /home/$USER/data/nginx-exporter
       type: volume
       o: bind
