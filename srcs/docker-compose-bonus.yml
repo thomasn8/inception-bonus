@@ -11,7 +11,8 @@ services:
       - inception
     ports:
       - "127.0.0.1:443:443"
-      # - "127.0.0.1:80:80"
+      - "127.0.0.1:80:80"
+      - "127.0.0.1:9913:9913"
     volumes:
       - wordpress_data:/var/www/html/wordpress
     restart: always
@@ -90,21 +91,21 @@ services:
       - inception
     restart: always
 
-  nginx-exporter:
-    build: ./requirements/bonus/nginx-exporter
-    container_name: nginx-exporter
-    image: nginx-exporter:debian
-    ports:
-      - "127.0.0.1:9913:9913"
-    volumes:
-      - nginx-exporter_data:/metrics
-    networks:
-      - inception
-    env_file:
-      - .env
-    depends_on:
-      - nginx
-    restart: always
+  # nginx-exporter:
+  #   build: ./requirements/bonus/nginx-exporter
+  #   container_name: nginx-exporter
+  #   image: nginx-exporter:debian
+  #   ports:
+  #     - "127.0.0.1:9913:9913"
+  #   volumes:
+  #     - nginx-exporter_data:/metrics
+  #   networks:
+  #     - inception
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - nginx
+  #   restart: always
 
   prometheus:
     build: ./requirements/bonus/prometheus
@@ -118,8 +119,8 @@ services:
       - inception
     env_file:
       - .env
-    depends_on:
-      - nginx-exporter
+    # depends_on:
+    #   - nginx-exporter
     restart: always
 
   grafana:
