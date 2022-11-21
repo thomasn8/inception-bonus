@@ -118,7 +118,7 @@ services:
     container_name: nginx-exporter
     image: nginx-exporter:debian
     ports:
-      - "127.0.0.1:9113:9113"
+      - "127.0.0.1:9913:9913"
     volumes:
       - nginx-exporter_data:/metrics
     networks:

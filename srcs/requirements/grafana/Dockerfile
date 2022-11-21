@@ -1,7 +1,6 @@
 FROM debian:buster
 
-RUN apt-get update && apt-get install -y \
-        wget && \
+RUN apt-get update && apt-get install -y wget && \
     wget https://dl.grafana.com/enterprise/release/grafana-enterprise-9.2.5.linux-amd64.tar.gz && \
     tar -zxvf grafana-enterprise-9.2.5.linux-amd64.tar.gz && \
     rm -rf grafana-enterprise-9.2.5.linux-amd64.tar.gz && \

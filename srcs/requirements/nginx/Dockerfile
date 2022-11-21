@@ -19,13 +19,11 @@ RUN apt-get update && apt-get install -y \
     wget \
     git \
     make \
-    vim \
     libpcre3 libpcre3-dev zlib1g zlib1g-dev \
     build-essential libxml2-dev libxslt-dev libgd-dev libgeoip-dev \
     libluajit-5.1-dev libpam0g-dev libssl-dev libluajit-5.1-dev libpam0g-dev libexpat1-dev && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-RUN wget https://nginx.org/download/nginx-1.14.2.tar.gz && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    wget https://nginx.org/download/nginx-1.14.2.tar.gz && \
     tar xf nginx-1.14.2.tar.gz && \
     rm nginx-1.14.2.tar.gz && \
     wget https://github.com/vozlt/nginx-module-vts/archive/v0.1.18.tar.gz && \
@@ -51,14 +49,12 @@ RUN cd /nginx-1.14.2 && \
     --with-mail=dynamic --with-mail_ssl_module \
     --add-dynamic-module=../nginx-module-vts-0.1.18
 
-
 RUN cd /nginx-1.14.2 && \
     make && \
     cp objs/ngx_http_vhost_traffic_status_module.so /usr/share/nginx/modules/ && \
     cp objs/ngx_http_vhost_traffic_status_module.so /etc/nginx/modules-enabled/ && \
-    echo "load_module modules/ngx_http_vhost_traffic_status_module.so;" > /usr/share/nginx/modules-available/mod-http-vhost-traffic-status.conf
-
-RUN rm -rf /nginx-1.14.2/ /nginx-module-vts-0.1.18/
+    echo "load_module modules/ngx_http_vhost_traffic_status_module.so;" > /usr/share/nginx/modules-available/mod-http-vhost-traffic-status.conf && \
+    rm -rf /nginx-1.14.2/ /nginx-module-vts-0.1.18/
 
 COPY conf/nginx.conf /etc/nginx/
 # --------------------

@@ -194,6 +194,7 @@
 		https://serverdiary.com/web-server/nginx-virtual-host-traffic-status-module-to-monitor-nginx/
 		https://github.com/vozlt/nginx-module-vts#installation
 		https://hub.docker.com/r/sophos/nginx-vts-exporter#download
+		https://www.youtube.com/watch?v=v8clGEy0bFo&list=PLn6POgpklwWo3_2pj5Jflqwla62P5OI8n&index=18
 
 		https://grafana.com/tutorials/grafana-fundamentals/?utm_source=grafana_gettingstarted
 		https://grafana.com/docs/grafana/latest/setup-grafana/installation/debian/
