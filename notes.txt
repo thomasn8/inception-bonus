@@ -63,7 +63,11 @@
 				#l'intégrité des données échangées ;
 				#de manière optionnelle, l'authentification du client
 			Les protocoles de la couche application, comme le HTTP, n'ont pas à être profondément modifiés pour utiliser une connexion sécurisée, mais seulement implémentés au-dessus de la SSL/TLS, ce qui pour le HTTP a donné le protocole HTTPS. 
-			
+
+		Pour tester la syntax de la config nginx :	
+		$ nginx -t
+
+
 	Wordpress (et php-fpm):
 
 		- WordPress 
@@ -185,6 +189,11 @@
 
 		https://levelup.gitconnected.com/metrics-reliably-configuring-prometheus-and-grafana-with-docker-2077541c8e6d
 		https://prometheus.io/docs/prometheus/latest/getting_started/
+
+		https://ahelpme.com/software/nginx/install-nginx-virtual-host-traffic-status-module-traffic-information-in-nginx-and-more-per-server-block-and-upstreams/
+		https://serverdiary.com/web-server/nginx-virtual-host-traffic-status-module-to-monitor-nginx/
+		https://github.com/vozlt/nginx-module-vts#installation
+		https://hub.docker.com/r/sophos/nginx-vts-exporter#download
 
 		https://grafana.com/tutorials/grafana-fundamentals/?utm_source=grafana_gettingstarted
 		https://grafana.com/docs/grafana/latest/setup-grafana/installation/debian/
