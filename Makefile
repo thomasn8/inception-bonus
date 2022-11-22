@@ -1,11 +1,11 @@
-all: bonus
+all: run
 
 run:
 		@sh ./prepare/setup.sh
 		@docker-compose -f ./srcs/docker-compose.yml up -d --build
 
 bonus:
-		@sh ./prepare/setup-bonus.sh
+		@sh ./prepare/setup.sh
 		@docker-compose -f ./srcs/docker-compose-bonus.yml up -d --build
 		@sh ./prepare/loader.sh &
 		@docker stop ftp
@@ -14,18 +14,12 @@ bonus:
 		@docker exec -d ftp chmod -R 774 /home/$(FTP_USER)/ftp/wordpress
 		@docker exec -d redis /usr/sbin/cron
 
-stop:
-		@docker-compose -f ./srcs/docker-compose.yml stop
-
-start:
-		@docker-compose -f ./srcs/docker-compose.yml start
-
 down:
-		@docker-compose -f ./srcs/docker-compose-bonus.yml down --remove-orphans
-
-create:
-		@sh setup.sh
-		@docker-compose -f ./srcs/docker-compose.yml create --build
+		@if docker container ls -a | grep -q grafana ; then\
+		    docker-compose -f ./srcs/docker-compose-bonus.yml down --remove-orphans;\
+		else\
+		    docker-compose -f ./srcs/docker-compose.yml down --remove-orphans;\
+		fi
 
 clean:	down
 		sudo rm -rf /home/$(USER)/data
@@ -34,7 +28,25 @@ clean:	down
 		@echo "Deleting all volumes : "
 		@docker volume rm -f `docker volume ls -q`;
 
-re:		clean bonus
+create:
+		@sh setup.sh
+		@docker-compose -f ./srcs/docker-compose.yml create --build
+
+start:
+		@if docker container ls -a | grep -q grafana ; then\
+		    docker-compose -f ./srcs/docker-compose-bonus.yml start;\
+		else\
+		    docker-compose -f ./srcs/docker-compose.yml start;\
+		fi
+
+stop:
+		@if docker container ls -a | grep -q grafana ; then\
+			docker-compose -f ./srcs/docker-compose-bonus.yml stop;\
+		else\
+			docker-compose -f ./srcs/docker-compose.yml stop;\
+		fi
+
+re:		clean run
 
 # START containers in interactive mode
 # mandatory containers
@@ -67,4 +79,4 @@ ps:
 img:
 		@docker image ls -a
 
-.PHONY: all run bonus stop start down create clean prune nginx wordpress mariadb redis ftp adminer prometheus grafana static ps img re
+.PHONY: all run bonus stop start down create clean prune nginx wordpress mariadb redis ftp adminer static prometheus grafana ps img re

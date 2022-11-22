@@ -16,7 +16,6 @@ then
     mkdir /home/$USER/data/mysql
     mkdir /home/$USER/data/wordpress
     mkdir /home/$USER/data/redis
-    mkdir /home/$USER/data/prometheus
     mkdir /home/$USER/data/metrics
     echo "volumes installed in /home/$USER/data"
 fi

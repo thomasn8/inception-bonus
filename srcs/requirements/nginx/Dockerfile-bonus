@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
     rm nginx-1.14.2.tar.gz && \
     wget https://github.com/vozlt/nginx-module-vts/archive/v0.1.18.tar.gz && \
     tar xf v0.1.18.tar.gz && \
-    rm v0.1.18.tar.gz && \
+    rm v0.1.18.tar.gz
 
 RUN cd /nginx-1.14.2 && \
     ./configure \
