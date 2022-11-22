@@ -11,8 +11,6 @@ services:
       - inception
     ports:
       - "127.0.0.1:443:443"
-      - "127.0.0.1:80:80"
-      - "127.0.0.1:9913:9913"
     volumes:
       - wordpress_data:/var/www/html/wordpress
     restart: always
@@ -95,8 +93,6 @@ services:
     build: ./requirements/bonus/prometheus
     container_name: prometheus
     image: prometheus:debian
-    ports:
-      - "127.0.0.1:9090:9090"
     volumes:
       - metrics_data:/var/lib/prometheus/metrics2/
     networks:
