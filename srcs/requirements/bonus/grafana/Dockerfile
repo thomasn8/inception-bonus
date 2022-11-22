@@ -8,7 +8,9 @@ RUN apt-get update && apt-get install -y wget && \
 	apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY ./conf/defaults.ini /grafana/conf
-COPY ./conf/provisioning/datasources.yaml /grafana/conf/provisioning/datasources/sample.yaml
+COPY ./conf/provisioning/datasources.yml /grafana/conf/provisioning/datasources/sample.yaml
+COPY ./conf/provisioning/dashboard.yml   /grafana/conf/provisioning/dashboards/sample.yaml
+COPY ./conf/provisioning/nginx-vts.json  /grafana/dashboards/
 
 EXPOSE 3000
 

@@ -91,22 +91,6 @@ services:
       - inception
     restart: always
 
-  # nginx-exporter:
-  #   build: ./requirements/bonus/nginx-exporter
-  #   container_name: nginx-exporter
-  #   image: nginx-exporter:debian
-  #   ports:
-  #     - "127.0.0.1:9913:9913"
-  #   volumes:
-  #     - nginx-exporter_data:/metrics
-  #   networks:
-  #     - inception
-  #   env_file:
-  #     - .env
-  #   depends_on:
-  #     - nginx
-  #   restart: always
-
   prometheus:
     build: ./requirements/bonus/prometheus
     container_name: prometheus
@@ -114,13 +98,13 @@ services:
     ports:
       - "127.0.0.1:9090:9090"
     volumes:
-      - prometheus_data:/prometheus/
+      - metrics_data:/var/lib/prometheus/metrics2/
     networks:
       - inception
     env_file:
       - .env
-    # depends_on:
-    #   - nginx-exporter
+    depends_on:
+      - nginx
     restart: always
 
   grafana:
@@ -159,15 +143,9 @@ volumes:
       device: /home/$USER/data/redis
       type: volume
       o: bind
-  nginx-exporter_data:
+  metrics_data:
     driver: local
     driver_opts:
-      device: /home/$USER/data/nginx-exporter
-      type: volume
-      o: bind
-  prometheus_data:
-    driver: local
-    driver_opts:
-      device: /home/$USER/data/prometheus
+      device: /home/$USER/data/metrics
       type: volume
       o: bind

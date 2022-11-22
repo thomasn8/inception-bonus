@@ -207,3 +207,4 @@
 		https://blog.56k.cloud/provisioning-grafana-datasources-and-dashboards-automagically/
 		https://grafana.com/docs/grafana/latest/datasources/mysql/
 		
+		https://github.com/nginxinc/nginx-prometheus-exporter/tree/main/grafana

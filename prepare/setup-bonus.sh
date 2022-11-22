@@ -16,8 +16,6 @@ then
     mkdir /home/$USER/data/mysql
     mkdir /home/$USER/data/wordpress
     mkdir /home/$USER/data/redis
-    mkdir /home/$USER/data/prometheus
-    mkdir /home/$USER/data/nginx-exporter
-    echo "created: /home/$USER/data, /home/$USER/data/mysql, /home/$USER/data/wordpress, /home/$USER/data/redis, /home/$USER/data/prometheus, /home/$USER/data/nginx-exporter"
-    echo "volumes installed"
+    mkdir /home/$USER/data/metrics
+    echo "volumes installed in /home/$USER/data"
 fi

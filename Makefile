@@ -58,8 +58,6 @@ prometheus:
 		@docker exec -it prometheus bash
 grafana:
 		@docker exec -it grafana bash
-nginx-exporter:
-		@docker exec -it nginx-exporter bash
 
 # docker usefull cmds
 prune: 	down
@@ -69,4 +67,4 @@ ps:
 img:
 		@docker image ls -a
 
-.PHONY: all run bonus stop start down create clean prune nginx wordpress mariadb redis ftp adminer prometheus grafana nginx-exporter static ps img re
+.PHONY: all run bonus stop start down create clean prune nginx wordpress mariadb redis ftp adminer prometheus grafana static ps img re
