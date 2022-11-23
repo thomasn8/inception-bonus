@@ -1,13 +1,13 @@
 all: run
 
 run:
-		@sh ./prepare/setup.sh
+		@sh ./srcs/prepare/setup.sh
 		@docker-compose -f ./srcs/docker-compose.yml up -d --build
 
 bonus:
-		@sh ./prepare/setup.sh
+		@sh ./srcs/prepare/setup.sh
 		@docker-compose -f ./srcs/docker-compose-bonus.yml up -d --build
-		@sh ./prepare/loader.sh &
+		@sh ./srcs/prepare/loader.sh &
 		@docker stop ftp
 		@docker start ftp
 		@docker exec -d ftp chown -R $(FTP_USER):$(FTP_USER) /home/$(FTP_USER)/ftp/wordpress
